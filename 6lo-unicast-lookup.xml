@@ -145,9 +145,9 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 </section>	<!-- end section = "Introduction"  -->
 
 
-
 <section> <name>Terminology</name>
-  <section anchor='bcp'><name>BCP 14</name>
+
+  <section anchor='bcp'><name>Requirements Language</name>
   <t>
 
     The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -157,7 +157,8 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
     they appear in all capitals, as shown here.
 
   </t>
-  </section>	<!-- end section "BCP 14" -->
+  </section>	<!-- end section "Requirements Language" -->
+
 
   <section anchor='lo'><name>References</name>
     <t>
@@ -179,6 +180,42 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 	</li>
 	</ul>
   </section> <!--	 end section "References" -->
+
+
+  <section anchor='acronyms'><name>Glossary</name>
+    <t> This document uses the following acronyms:</t>
+       <dl newline="false" indent="7" spacing="compact" >
+       <dt>6BBR</dt><dd> 6LoWPAN Backbone Router </dd>
+       <dt>6BBR</dt><dd> 6LoWPAN Border Router </dd>
+       <dt>6LN</dt><dd> 6LoWPAN Node </dd>
+       <dt>6LR</dt><dd> 6LoWPAN Router </dd>
+       <dt>6CIO</dt><dd> Capability Indication Option </dd>
+       <dt>AMC</dt><dd> Address Mapping Confirmation </dd>
+       <dt>AMR</dt><dd> Address Mapping Request</dd>
+       <dt>ARO</dt><dd> Address Registration Option</dd>
+       <dt>DAC</dt><dd> Duplicate Address Confirmation </dd>
+       <dt>DAD</dt><dd> Duplicate Address Detection </dd>
+       <dt>DAR</dt><dd> Duplicate Address Request</dd>
+       <dt>EARO</dt><dd> Extended Address Registration Option</dd>
+       <dt>EDAC</dt><dd> Extended Duplicate Address Confirmation  </dd>
+       <dt>EDAR</dt><dd> Extended Duplicate Address Request</dd>
+       <dt>DODAG</dt><dd> Destination-Oriented Directed Acyclic Graph </dd>
+       <dt>LLN</dt><dd> Low-Power and Lossy Network </dd>
+       <dt>NA</dt><dd>  Neighbor Advertisement </dd>
+       <dt>NCE</dt><dd>  Neighbor Cache Entry  </dd>
+       <dt>ND</dt><dd>  Neighbor Discovery  </dd>
+       <dt>NS</dt><dd>  Neighbor Solicitation  </dd>
+       <dt>ROVR</dt><dd> Registration Ownership Verifier </dd>
+       <dt>RA</dt><dd>  Router Advertisement  </dd>
+       <dt>RS</dt><dd>  Router Solicitation  </dd>
+       <dt>TID</dt><dd> Transaction ID </dd>
+       </dl>
+
+
+  </section>	<!-- end section "Glossary" -->
+
+
+
 
   <section anchor='new'><name>New Terms</name>
     <t>
@@ -208,36 +245,6 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 	</dl>
   </section>	<!-- end section "New Terms" -->
 
-  <section anchor='acronyms'><name>Acronym Definitions</name>
-    <t> This document uses the following acronyms:</t>
-       <dl>
-       <dt>6BBR</dt><dd> 6LoWPAN Backbone Router </dd>
-       <dt>6BBR</dt><dd> 6LoWPAN Border Router </dd>
-       <dt>6LR</dt><dd> 6LoWPAN Router </dd>
-       <dt>6CIO</dt><dd> Capability Indication Option </dd>
-       <dt>AMC</dt><dd> Address Mapping Confirmation </dd>
-       <dt>AMR</dt><dd> Address Mapping Request</dd>
-       <dt>ARO</dt><dd> Address Registration Option</dd>
-       <dt>DAC</dt><dd> Duplicate Address Confirmation </dd>
-       <dt>DAD</dt><dd> Duplicate Address Detection </dd>
-       <dt>DAR</dt><dd> Duplicate Address Request</dd>
-       <dt>EDAC</dt><dd> Extended Duplicate Address Confirmation  </dd>
-       <dt>EDAR</dt><dd> Extended Duplicate Address Request</dd>
-       <dt>DODAG</dt><dd> Destination-Oriented Directed Acyclic Graph </dd>
-       <dt>LLN</dt><dd> Low-Power and Lossy Network </dd>
-       <dt>NA</dt><dd>  Neighbor Advertisement </dd>
-       <dt>NCE</dt><dd>  Neighbor Cache Entry  </dd>
-       <dt>ND</dt><dd>  Neighbor Discovery  </dd>
-       <dt>NS</dt><dd>  Neighbor Solicitation  </dd>
-       <dt>ROVR</dt><dd> Registration Ownership Verifier </dd>
-       <dt>RA</dt><dd>  Router Advertisement  </dd>
-       <dt>RS</dt><dd>  Router Solicitation  </dd>
-       <dt>TID</dt><dd> Transaction ID </dd>
-       </dl>
-
-
-  </section>	<!-- end section "Acronym Definitions" -->
-
 
 </section>	<!-- end section "Terminology" -->
 
@@ -265,14 +272,18 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
     DAD and Lookup.
     </t>
     <t>
-	The LLN may be a hub-and-spoke access link such	as (Low-Power)
-    IEEE STD. 802.11 (Wi-Fi) <xref target="IEEEstd80211"/>
-	and IEEE STD. 802.15.1 (Bluetooth) <xref target="IEEEstd802151"/>,
-    or a Mesh-Under or a Route-Over network <xref target="RFC8505"/>.
+	The LLN may be a hub-and-spoke access link such	as (Low-Power) Wi-Fi
+    <xref target="IEEE80211"/> and Bluetooth (Low Energy)
+    <xref target="IEEE802151"/>, or a Route-Over LLN such as the Wi-SUN mesh
+    <xref target="I-D.heile-lpwan-wisun-overview"/> that leverages 6LoWPAN
+    <xref target="RFC4919"/><xref target="RFC6282"/>
+    and RPL <xref target="RFC6550"/> over <xref target="IEEE802154"/>.
     </t>
+
 
     <figure anchor='figBackbone'><name>Backbone Link and 6LBR</name>
     <artwork><![CDATA[
+                 |
                  |
               +-----+               +-----+       +-----+
     (default) |     |          6LBR |     |       |     | IPv6
@@ -686,6 +697,14 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 </middle>
 
 <back>
+
+
+
+<displayreference   target="IEEE802154"            to="IEEE Std 802.15.4"/>
+<displayreference   target="IEEE802151"            to="IEEE Std 802.15.1"/>
+<displayreference   target="IEEE80211"             to="IEEE Std 802.11"/>
+
+
     <references title='Normative References'>
 	<!-- RFC  -->
 
@@ -705,29 +724,49 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 	<!-- RFC  -->
 
     <!-- I-D -->
+	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4919.xml'/>
+	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6282.xml'/>
+	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6550.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8928.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8929.xml'/>
 	<xi:include href= 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mboned-ieee802-mcast-problems.xml'/>
     <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.bi-savi-wlan.xml'/>
-    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.thubert-6man-ipv6-over-wireless.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.thubert-6man-ipv6-over-wireless.xml'/>   <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.heile-lpwan-wisun-overview.xml'/>
 
-      <reference anchor="IEEEstd80211">
+
+      <reference anchor='IEEE802154'>
          <front>
-            <title>IEEE Standard for Information technology --
-		Telecommunications and information exchange between systems
-		Local and metropolitan area networks-- Specific requirements
-		Part 11: Wireless LAN Medium Access Control (MAC) and Physical
-		Layer (PHY) Specifications
+            <title>IEEE Std 802.15.4, Part. 15.4: Wireless Medium Access
+            Control (MAC) and Physical Layer (PHY) Specifications for Low-Rate
+            Wireless Personal Area Networks
             </title>
             <author>
-               <organization>
-		IEEE standard for Information Technology</organization>
+               <organization>IEEE standard for Information Technology</organization>
             </author>
             <date/>
          </front>
       </reference>
 
-      <reference anchor="IEEEstd802151">
+      <reference anchor='IEEE80211'
+                 target="https://ieeexplore.ieee.org/document/9363693" >
+        <front>
+          <title>
+            IEEE Standard 802.11 - IEEE Standard for Information
+            Technology - Telecommunications and information exchange
+            between systems Local and metropolitan area networks -
+            Specific requirements - Part 11: Wireless LAN Medium
+            Access Control (MAC) and Physical Layer (PHY)
+            Specifications.
+          </title>
+          <author>
+               <organization>IEEE standard for Information Technology</organization>
+           </author>
+          <date/>
+        </front>
+      </reference>
+
+
+      <reference anchor="IEEE802151">
          <front>
             <title> IEEE Standard for Information Technology -
 		Telecommunications and Information Exchange Between Systems -

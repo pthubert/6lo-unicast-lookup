@@ -5,7 +5,7 @@
 6lo                                                      P. Thubert, Ed.
 Internet-Draft                                      E.L.A. Levy-Abegnoli
 Intended status: Standards Track                           Cisco Systems
-Expires: 31 March 2022                                 27 September 2021
+Expires: 1 April 2022                                  28 September 2021
 
 
                  IPv6 Neighbor Discovery Unicast Lookup
@@ -31,7 +31,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 March 2022.
+   This Internet-Draft will expire on 1 April 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 1]
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 1]
 
 Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
@@ -62,24 +62,24 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     2.1.  BCP 14  . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.1.  Requirements Language . . . . . . . . . . . . . . . . . .   3
      2.2.  References  . . . . . . . . . . . . . . . . . . . . . . .   3
-     2.3.  New Terms . . . . . . . . . . . . . . . . . . . . . . . .   4
-     2.4.  Acronym Definitions . . . . . . . . . . . . . . . . . . .   4
+     2.3.  Glossary  . . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.4.  New Terms . . . . . . . . . . . . . . . . . . . . . . . .   4
    3.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   4.  Updating RFC 8505 . . . . . . . . . . . . . . . . . . . . . .   7
+   4.  Updating RFC 8505 . . . . . . . . . . . . . . . . . . . . . .   6
      4.1.  Extended Neighbor Discovery Options and Messages  . . . .   7
        4.1.1.  Extending the Capability Indication Option  . . . . .   7
        4.1.2.  New Code Prefix for Address Mapping Messages  . . . .   8
        4.1.3.  New ARO Status  . . . . . . . . . . . . . . . . . . .   8
-     4.2.  Address Mapping Messages  . . . . . . . . . . . . . . . .   9
-     4.3.  IPv6 ND-based Address Lookup  . . . . . . . . . . . . . .  10
+     4.2.  Address Mapping Messages  . . . . . . . . . . . . . . . .   8
+     4.3.  IPv6 ND-based Address Lookup  . . . . . . . . . . . . . .   9
    5.  Backward Compatibility  . . . . . . . . . . . . . . . . . . .  10
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
-     7.1.  ICMP Codes  . . . . . . . . . . . . . . . . . . . . . . .  11
-     7.2.  New ARO Status values . . . . . . . . . . . . . . . . . .  12
-     7.3.  New 6LoWPAN Capability Bits . . . . . . . . . . . . . . .  12
+     7.1.  ICMP Codes  . . . . . . . . . . . . . . . . . . . . . . .  10
+     7.2.  New ARO Status values . . . . . . . . . . . . . . . . . .  11
+     7.3.  New 6LoWPAN Capability Bits . . . . . . . . . . . . . . .  11
    8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  12
    9.  Normative References  . . . . . . . . . . . . . . . . . . . .  12
    10. Informative References  . . . . . . . . . . . . . . . . . . .  13
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 2]
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 2]
 
 Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
@@ -150,7 +150,7 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
 2.  Terminology
 
-2.1.  BCP 14
+2.1.  Requirements Language
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -165,7 +165,7 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
 
 
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 3]
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 3]
 
 Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
@@ -179,7 +179,36 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    *  "Registration Extensions for 6LoWPAN Neighbor Discovery" [RFC8505]
       and "IPv6 Backbone Router" [RFC8929].
 
-2.3.  New Terms
+2.3.  Glossary
+
+   This document uses the following acronyms:
+
+   6BBR   6LoWPAN Backbone Router
+   6BBR   6LoWPAN Border Router
+   6LN    6LoWPAN Node
+   6LR    6LoWPAN Router
+   6CIO   Capability Indication Option
+   AMC    Address Mapping Confirmation
+   AMR    Address Mapping Request
+   ARO    Address Registration Option
+   DAC    Duplicate Address Confirmation
+   DAD    Duplicate Address Detection
+   DAR    Duplicate Address Request
+   EARO   Extended Address Registration Option
+   EDAC   Extended Duplicate Address Confirmation
+   EDAR   Extended Duplicate Address Request
+   DODAG  Destination-Oriented Directed Acyclic Graph
+   LLN    Low-Power and Lossy Network
+   NA     Neighbor Advertisement
+   NCE    Neighbor Cache Entry
+   ND     Neighbor Discovery
+   NS     Neighbor Solicitation
+   ROVR   Registration Ownership Verifier
+   RA     Router Advertisement
+   RS     Router Solicitation
+   TID    Transaction ID
+
+2.4.  New Terms
 
    This document introduces the following terminology:
 
@@ -188,6 +217,14 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
    Address Mapping Confirm  An ICMP message with an ICMP type of 158
       (DAC) and a Code Prefix of 1.
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 4]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
    This document uses terminology defined in [RFC8505], in particular:
 
@@ -199,61 +236,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
       associated to one registration, in other words one entry in the
       Address Registrar.
 
-2.4.  Acronym Definitions
-
-   This document uses the following acronyms:
-
-   6BBR  6LoWPAN Backbone Router
-
-   6BBR  6LoWPAN Border Router
-
-   6LR  6LoWPAN Router
-
-   6CIO  Capability Indication Option
-
-   AMC  Address Mapping Confirmation
-
-   AMR  Address Mapping Request
-
-   ARO  Address Registration Option
-
-   DAC  Duplicate Address Confirmation
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 4]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
-   DAD  Duplicate Address Detection
-
-   DAR  Duplicate Address Request
-
-   EDAC  Extended Duplicate Address Confirmation
-
-   EDAR  Extended Duplicate Address Request
-
-   DODAG  Destination-Oriented Directed Acyclic Graph
-
-   LLN  Low-Power and Lossy Network
-
-   NA  Neighbor Advertisement
-
-   NCE  Neighbor Cache Entry
-
-   ND  Neighbor Discovery
-
-   NS  Neighbor Solicitation
-
-   ROVR  Registration Ownership Verifier
-
-   RA  Router Advertisement
-
-   RS  Router Solicitation
-
-   TID  Transaction ID
-
 3.  Overview
 
    Figure 1 illustrates a Backbone Link that federates a collection of
@@ -263,25 +245,13 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    A collection of IPv6 Nodes are present on the Backbone and use IPv6
    ND [RFC4861][RFC4862] procedures for DAD and Lookup.
 
-   The LLN may be a hub-and-spoke access link such as (Low-Power) IEEE
-   STD. 802.11 (Wi-Fi) [IEEEstd80211] and IEEE STD. 802.15.1 (Bluetooth)
-   [IEEEstd802151], or a Mesh-Under or a Route-Over network [RFC8505].
+   The LLN may be a hub-and-spoke access link such as (Low-Power) Wi-Fi
+   [IEEE Std 802.11] and Bluetooth (Low Energy) [IEEE Std 802.15.1], or
+   a Route-Over LLN such as the Wi-SUN mesh
+   [I-D.heile-lpwan-wisun-overview] that leverages 6LoWPAN
+   [RFC4919][RFC6282] and RPL [RFC6550] over [IEEE Std 802.15.4].
 
-
-
-
-
-
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 5]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
+                    |
                     |
                  +-----+               +-----+       +-----+
        (default) |     |          6LBR |     |       |     | IPv6
@@ -303,6 +273,14 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
          LLN                        LLN                      LLN
 
                       Figure 1: Backbone Link and 6LBR
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 5]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
    A 6LBR provides registration services for the purpose of proactive
    IPv6 ND and maintains a registry of the active registrations as an
@@ -330,14 +308,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    *  Based on that entry, it provides duplicate avoidance services
       within the scope of its Address Registrar.
 
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 6]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
    *  The 6LBR also provides address lookup services for the Registered
       Address using unicast ICMPv6 DAR and DAC-based Address Mapping
       messages.
@@ -359,6 +329,14 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
    This specification leverages the capability to insert IPv6 ND options
    in the EDAR and EDAC messages that was introduced in [RFC8929].
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 6]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
    It extends DAR and DAR ICMP messages for address lookup in
    Section 4.1.2 that use the same ICMP types as EDAR and EDAC but a
@@ -388,12 +366,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    services per this specification.
 
 
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 7]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -409,6 +381,18 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    Type  36
 
    A  The 6LBR provides address mapping services.
+
+
+
+
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 7]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
 4.1.2.  New Code Prefix for Address Mapping Messages
 
@@ -434,22 +418,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    This specification defines a new Status "Not Found" as indicated in
    Table 1
 
-
-
-
-
-
-
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 8]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
        +-------+---------------------------------------------------+
        | Value | Description                                       |
        +-------+---------------------------------------------------+
@@ -474,6 +442,14 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    In the Address Mapping flow, the querier IPv6 Node uses an AMR
    message, which is characterized by an ICMPv6 Type of 157 and a Code
    Prefix of 1.  When used on-link, the AMR message SHOULD carry a SLLAO
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 8]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
+
    indicating the LLA of the querier.  The Code Suffix MUST be set to 0
    indicating a ROVR Length of 64 bits.  The ROVR, TID and Lifetime
    fields MUST be set to 0 and ignored by the receiver.
@@ -495,16 +471,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
       6LBR MUST place one in a TLLAO option in the AMC message.
 
    The AMC is sent unicast the 6LBR to the querier.
-
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                 [Page 9]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
 
 4.3.  IPv6 ND-based Address Lookup
 
@@ -528,6 +494,17 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    *  If the address is not present in the Address Registrar then the
       6LBR MUST set the status to "Not Found".  The ROVR, TID and
       Lifetime fields MUST be set to 0 and ignored by the receiver.
+
+
+
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                  [Page 9]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
    *  Else if the address is present in the Address Registrar then the
       EARO fields MUST be set from the ROVR, TID and remaining Lifetime
@@ -554,14 +531,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    throughout this document by the RFC number for this specification
    once it is allocated.
 
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 10]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
    IANA is requested to make a number of changes under the "Internet
    Control Message Protocol version 6 (ICMPv6) Parameters" registry, as
    follows.
@@ -583,6 +552,15 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
    subregistries.
 
    The new subregistries are to be initialized as follows:
+
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 10]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
      +-------------+-----------------------------+-------------------+
      | Code Prefix | Meaning                     | Reference         |
@@ -610,14 +588,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
           Table 3: New Code Prefixes for ICMP type 158 DAC message
 
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 11]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
 7.2.  New ARO Status values
 
    IANA is requested to make additions to the Address Registration
@@ -635,6 +605,18 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
    IANA is requested to make additions to the Subregistry for "6LoWPAN
    Capability Bits" as follows:
+
+
+
+
+
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 11]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
             +----------------+--------------------+-----------+
             | Capability Bit | Meaning            | Reference |
@@ -664,16 +646,6 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
               DOI 10.17487/RFC4862, September 2007,
               <https://www.rfc-editor.org/info/rfc4862>.
 
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 12]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
               Bormann, "Neighbor Discovery Optimization for IPv6 over
               Low-Power Wireless Personal Area Networks (6LoWPANs)",
@@ -694,6 +666,14 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 12]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
+
    [RFC8505]  Thubert, P., Ed., Nordmark, E., Chakrabarti, S., and C.
               Perkins, "Registration Extensions for IPv6 over Low-Power
               Wireless Personal Area Network (6LoWPAN) Neighbor
@@ -701,6 +681,24 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
               <https://www.rfc-editor.org/info/rfc8505>.
 
 10.  Informative References
+
+   [RFC4919]  Kushalnagar, N., Montenegro, G., and C. Schumacher, "IPv6
+              over Low-Power Wireless Personal Area Networks (6LoWPANs):
+              Overview, Assumptions, Problem Statement, and Goals",
+              RFC 4919, DOI 10.17487/RFC4919, August 2007,
+              <https://www.rfc-editor.org/info/rfc4919>.
+
+   [RFC6282]  Hui, J., Ed. and P. Thubert, "Compression Format for IPv6
+              Datagrams over IEEE 802.15.4-Based Networks", RFC 6282,
+              DOI 10.17487/RFC6282, September 2011,
+              <https://www.rfc-editor.org/info/rfc6282>.
+
+   [RFC6550]  Winter, T., Ed., Thubert, P., Ed., Brandt, A., Hui, J.,
+              Kelsey, R., Levis, P., Pister, K., Struik, R., Vasseur,
+              JP., and R. Alexander, "RPL: IPv6 Routing Protocol for
+              Low-Power and Lossy Networks", RFC 6550,
+              DOI 10.17487/RFC6550, March 2012,
+              <https://www.rfc-editor.org/info/rfc6550>.
 
    [RFC8928]  Thubert, P., Ed., Sarikaya, B., Sethi, M., and R. Struik,
               "Address-Protected Neighbor Discovery for Low-Power and
@@ -719,22 +717,18 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
               <https://tools.ietf.org/html/draft-ietf-mboned-ieee802-
               mcast-problems-15>.
 
-
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 13]
-
-Internet-Draft           IPv6 ND Unicast Lookup           September 2021
-
-
    [I-D.bi-savi-wlan]
               Bi, J., Wu, J., Lin, T., and Y. Wang, "A SAVI Solution for
               WLAN", Work in Progress, Internet-Draft, draft-bi-savi-
               wlan-21, 10 May 2021,
               <https://tools.ietf.org/html/draft-bi-savi-wlan-21>.
+
+
+
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 13]
+
+Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
 
    [I-D.thubert-6man-ipv6-over-wireless]
               Thubert, P., "IPv6 Neighbor Discovery on Wireless
@@ -743,15 +737,29 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
               <https://tools.ietf.org/html/draft-thubert-6man-ipv6-over-
               wireless-09>.
 
-   [IEEEstd80211]
-              IEEE standard for Information Technology, "IEEE Standard
-              for Information technology -- Telecommunications and
-              information exchange between systems Local and
-              metropolitan area networks-- Specific requirements Part
-              11: Wireless LAN Medium Access Control (MAC) and Physical
-              Layer (PHY) Specifications".
+   [I-D.heile-lpwan-wisun-overview]
+              Heile, B., (Remy), B. L., Zhang, M., and C. E. Perkins,
+              "Wi-SUN FAN Overview", Work in Progress, Internet-Draft,
+              draft-heile-lpwan-wisun-overview-00, 3 July 2017,
+              <https://tools.ietf.org/html/draft-heile-lpwan-wisun-
+              overview-00>.
 
-   [IEEEstd802151]
+   [IEEE Std 802.15.4]
+              IEEE standard for Information Technology, "IEEE Std
+              802.15.4, Part. 15.4: Wireless Medium Access Control (MAC)
+              and Physical Layer (PHY) Specifications for Low-Rate
+              Wireless Personal Area Networks".
+
+   [IEEE Std 802.11]
+              IEEE standard for Information Technology, "IEEE Standard
+              802.11 - IEEE Standard for Information Technology -
+              Telecommunications and information exchange between
+              systems Local and metropolitan area networks - Specific
+              requirements - Part 11: Wireless LAN Medium Access Control
+              (MAC) and Physical Layer (PHY) Specifications.",
+              <https://ieeexplore.ieee.org/document/9363693>.
+
+   [IEEE Std 802.15.1]
               IEEE standard for Information Technology, "IEEE Standard
               for Information Technology - Telecommunications and
               Information Exchange Between Systems - Local and
@@ -770,20 +778,15 @@ Authors' Addresses
    France
 
    Phone: +33 497 23 26 34
-   Email: pthubert@cisco.com
 
 
 
-
-
-
-
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 14]
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 14]
 
 Internet-Draft           IPv6 ND Unicast Lookup           September 2021
+
+
+   Email: pthubert@cisco.com
 
 
    Eric Levy-Abegnoli
@@ -834,7 +837,4 @@ Internet-Draft           IPv6 ND Unicast Lookup           September 2021
 
 
 
-
-
-
-Thubert & Levy-Abegnoli   Expires 31 March 2022                [Page 15]
+Thubert & Levy-Abegnoli   Expires 1 April 2022                 [Page 15]
