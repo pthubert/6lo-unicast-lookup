@@ -17,7 +17,7 @@
 <rfc  xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr='trust200902'
 tocInclude="true" indexInclude="true" obsoletes=""  consensus="true"
 submissionType="IETF" xml:lang="en" version="3"
-docName="draft-thubert-6lo-unicast-lookup-01" >
+docName="draft-thubert-6lo-unicast-lookup-02" >
 
 <front>
 
@@ -119,14 +119,26 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
     </t>
 
 
+	<t><xref target="I-D.ietf-6lo-multicast-registration">"IPv6 Neighbor
+    Discovery Multicast Address Listener Registration"</xref> extends <xref
+    target="RFC8505"/> to register anycast and multicast addresses. This entails
+    accepting more than one registration for the same address and the use of
+    the ROVR field as a complement to the index. In that case te 6LBR does not
+    consider multiple registrations as duplicate and retains a state for the
+    anycast addresses that it can use to reply a query.
+    </t>
+
+
 	<t>
     It results that the 6LBR is capable of providing the LLA mapping for any
-    address that was proactively registered with an SLLAO. This draft defines
-    the protocol elements and the operations to try a unicast lookup with the
-    6LBR. This may save a reactive IPv6 ND Neighbor Solicitation (NS) message,
+    unicast and anycast address that was proactively registered with an SLLAO.
+    This draft defines the protocol elements and the operations to try a unicast
+    Layer-2 lookup with the 6LBR.
+    This may save a reactive IPv6 ND Neighbor Solicitation (NS) message,
     which is based on multicast and may be problematic in extensive wireless
     domains (see <xref target="I-D.ietf-mboned-ieee802-mcast-problems"/>) as
-    well as in large switched fabrics.
+    well as in large switched fabrics. In case of an anycast address, this draft
+    does not provide a policy/ logic to select between multiple registrations.
     </t>
 
 
@@ -308,8 +320,8 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 
     <t>
     A 6LBR provides registration services for the purpose of proactive IPv6 ND
-    and maintains a registry of the active registrations as an abstract data
-    structure called an Address Registrar.
+    and maintains a registry of the active registrations for unicast and anycast
+    IPv6 addresses as an abstract data structure called an Address Registrar.
     An entry in the Address Registrar is called an "Address Registration".
     </t>
 
@@ -716,7 +728,7 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8505.xml'/>
-
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6lo-multicast-registration.xml'/>
     </references>
 
 
@@ -731,7 +743,8 @@ docName="draft-thubert-6lo-unicast-lookup-01" >
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8929.xml'/>
 	<xi:include href= 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mboned-ieee802-mcast-problems.xml'/>
     <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.bi-savi-wlan.xml'/>
-    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.thubert-6man-ipv6-over-wireless.xml'/>   <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.heile-lpwan-wisun-overview.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.thubert-6man-ipv6-over-wireless.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.heile-lpwan-wisun-overview.xml'/>
 
 
       <reference anchor='IEEE802154'>
