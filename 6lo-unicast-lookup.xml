@@ -17,23 +17,22 @@
 <rfc  xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr='trust200902'
 tocInclude="true" indexInclude="true" obsoletes=""  consensus="true"
 submissionType="IETF" xml:lang="en" version="3"
-docName="draft-thubert-6lo-unicast-lookup-02" >
+docName="draft-thubert-6lo-unicast-lookup-03" >
 
 <front>
 
    <title abbrev='IPv6 ND Unicast Lookup'>IPv6 Neighbor Discovery Unicast Lookup</title>
+
+
    <author initials='P' surname='Thubert' fullname='Pascal Thubert' role='editor'>
-      <organization abbrev='Cisco Systems'>Cisco Systems, Inc</organization>
+      <!-- <organization abbrev='Cisco Systems'>Cisco Systems, Inc</organization> -->
       <address>
          <postal>
-            <street>Building D</street>
-            <street>45 Allee des Ormes - BP1200 </street>
-            <city>Mougins - Sophia Antipolis</city>
-            <code>06254</code>
+            <city>Roquefort-les-Pins</city>
+            <code>06330</code>
           <country>France</country>
          </postal>
-         <phone>+33 497 23 26 34</phone>
-         <email>pthubert@cisco.com</email>
+         <email>pascal.thubert@gmail.com</email>
       </address>
    </author>
 
@@ -123,7 +122,7 @@ docName="draft-thubert-6lo-unicast-lookup-02" >
     Discovery Multicast Address Listener Registration"</xref> extends <xref
     target="RFC8505"/> to register anycast and multicast addresses. This entails
     accepting more than one registration for the same address and the use of
-    the ROVR field as a complement to the index. In that case te 6LBR does not
+    the ROVR field as a complement to the index. In that case the 6LBR does not
     consider multiple registrations as duplicate and retains a state for the
     anycast addresses that it can use to reply a query.
     </t>
