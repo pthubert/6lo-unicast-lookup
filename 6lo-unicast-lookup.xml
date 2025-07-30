@@ -74,19 +74,6 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 </address>
 </author>
 
-
-    <author initials="A" surname="Rashid" fullname="Adnan Rashid">
-<organization abbrev="Politecnico di Bari">Politecnico di Bari</organization>
-<address>
-<postal>
-<street>Via Edoardo Orabona 4</street>
-<city>Bari</city>
-<code>70126</code>
-<country>Italy</country>
-</postal>
-<email>adnan.rashid@poliba.it</email>
-</address>
-</author>
    <area>Internet</area>
 
    <workgroup>6lo</workgroup>

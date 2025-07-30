@@ -4,10 +4,14 @@
 
 6lo                                                      P. Thubert, Ed.
 Internet-Draft                                       Without Affiliation
-Intended status: Standards Track                               A. Rashid
-Expires: 31 January 2026                             Politecnico di Bari
+Intended status: Standards Track                              L. Iannone
+Expires: 31 January 2026                                          Huawei
+                                                               A. Rashid
+                                                     Politecnico di Bari
                                                             T. Pecorella
                                                   University of Florence
+                                                               A. Rashid
+                                                     Politecnico di Bari
                                                             30 July 2025
 
 
@@ -46,10 +50,6 @@ Copyright Notice
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
-   extracted from this document must include Revised BSD License text as
-   described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Revised BSD License.
-
 
 
 
@@ -57,6 +57,10 @@ Thubert, et al.          Expires 31 January 2026                [Page 1]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
+
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
@@ -99,10 +103,6 @@ Table of Contents
    registration can be secured with [RFC8928], and proxy operations are
    enabled with [RFC8929].
 
-   [RFC8505] defines the Routing Registrar and extends [RFC6775] to use
-   a 6LoWPAN Border Router (6LBR) as a central service for Address
-   Registration and duplicate detection amongst Routing Registrars and
-   possibly individual Nodes that access it directly.
 
 
 
@@ -113,6 +113,11 @@ Thubert, et al.          Expires 31 January 2026                [Page 2]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
+
+   [RFC8505] defines the Routing Registrar and extends [RFC6775] to use
+   a 6LoWPAN Border Router (6LBR) as a central service for Address
+   Registration and duplicate detection amongst Routing Registrars and
+   possibly individual Nodes that access it directly.
 
    [RFC8929] introduces the Backbone Router (6BBR) as a Routing
    Registrar that performs IPv6 ND [RFC4861] [RFC4862] proxy operation
@@ -157,11 +162,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    an SLLAO.  This draft defines the protocol elements and the
    operations to try a unicast Layer-2 lookup with the 6LBR.  This may
    save a reactive IPv6 ND Neighbor Solicitation (NS) message, which is
-   based on multicast and may be problematic in extensive wireless
-   domains (see [RFC9119]) as well as in large switched fabrics.  In
-   case of an anycast address, this draft does not provide a policy/
-   logic to select between multiple registrations.
-
 
 
 
@@ -169,6 +169,11 @@ Thubert, et al.          Expires 31 January 2026                [Page 3]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
+
+   based on multicast and may be problematic in extensive wireless
+   domains (see [RFC9119]) as well as in large switched fabrics.  In
+   case of an anycast address, this draft does not provide a policy/
+   logic to select between multiple registrations.
 
    The registration and lookup services that the 6LBR provides do not
    have to be limited to 6BBRs and are available to any node that
@@ -213,11 +218,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    *6LR:*  6LoWPAN Router [RFC6775]
    *AMC:*  Address Mapping Confirmation
    *AMR:*  Address Mapping Request
-   *ARO:*  Address Registration Option [RFC6775]
-   *DAD:*  Duplicate Address Detection [RFC4861]
-   *EARO:*  Extended Address Registration Option [RFC8505]
-   *EDAC:*  Extended Duplicate Address Confirmation [RFC8505]
-   *EDAR:*  Extended Duplicate Address Request [RFC8505]
 
 
 
@@ -226,6 +226,11 @@ Thubert, et al.          Expires 31 January 2026                [Page 4]
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
+   *ARO:*  Address Registration Option [RFC6775]
+   *DAD:*  Duplicate Address Detection [RFC4861]
+   *EARO:*  Extended Address Registration Option [RFC8505]
+   *EDAC:*  Extended Duplicate Address Confirmation [RFC8505]
+   *EDAR:*  Extended Duplicate Address Request [RFC8505]
    *IPAM:*  IP Address Management
    *LLN:*  Low-Power and Lossy Network
    *LLA:*  Link Layer Address
@@ -269,11 +274,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    Address Registration  An Address Registration is an abstract state
       associated to one registration, in other words one entry in the
       Address Registrar.
-
-
-
-
-
 
 
 
@@ -864,6 +864,14 @@ Authors' Addresses
    Email: pascal.thubert@gmail.com
 
 
+   Luigi Iannone
+   Huawei Technologies France S.A.S.U.
+   18, Quai du Point du Jour
+   92100 Boulogne-Billancourt
+   France
+   Email: luigi.iannone@huawei.com
+
+
    Adnan Rashid
    Politecnico di Bari
    Via Edoardo Orabona 4
@@ -885,12 +893,60 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
 Thubert, et al.          Expires 31 January 2026               [Page 16]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
+
+   Adnan Rashid
+   Politecnico di Bari
+   Via Edoardo Orabona 4
+   70126 Bari
+   Italy
+   Email: adnan.rashid@poliba.it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 17]
