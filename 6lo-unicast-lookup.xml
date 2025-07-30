@@ -36,7 +36,19 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
          </postal>
          <email>pascal.thubert@gmail.com</email>
       </address>
-   </author>
+   </author>  
+   <author initials="L." surname="Iannone" fullname="Luigi Iannone">
+      <organization abbrev="Huawei">Huawei Technologies France S.A.S.U.</organization>
+      <address>
+        <postal>
+          <street>18, Quai du Point du Jour</street>
+          <city>Boulogne-Billancourt</city>
+          <code>92100</code>
+          <country>France</country>
+        </postal>
+        <email>luigi.iannone@huawei.com</email>
+      </address>
+    </author>
 
    <author initials="A" surname="Rashid" fullname="Adnan Rashid">
 <organization abbrev="Politecnico di Bari">Politecnico di Bari</organization>
@@ -63,6 +75,18 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 </author>
 
 
+    <author initials="A" surname="Rashid" fullname="Adnan Rashid">
+<organization abbrev="Politecnico di Bari">Politecnico di Bari</organization>
+<address>
+<postal>
+<street>Via Edoardo Orabona 4</street>
+<city>Bari</city>
+<code>70126</code>
+<country>Italy</country>
+</postal>
+<email>adnan.rashid@poliba.it</email>
+</address>
+</author>
    <area>Internet</area>
 
    <workgroup>6lo</workgroup>
