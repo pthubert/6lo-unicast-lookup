@@ -4,8 +4,11 @@
 
 6lo                                                      P. Thubert, Ed.
 Internet-Draft                                       Without Affiliation
-Intended status: Standards Track                            30 July 2025
-Expires: 31 January 2026
+Intended status: Standards Track                               A. Rashid
+Expires: 31 January 2026                             Politecnico di Bari
+                                                            T. Pecorella
+                                                  University of Florence
+                                                            30 July 2025
 
 
                  IPv6 Neighbor Discovery Unicast Lookup
@@ -50,10 +53,7 @@ Copyright Notice
 
 
 
-
-
-
-Thubert                  Expires 31 January 2026                [Page 1]
+Thubert, et al.          Expires 31 January 2026                [Page 1]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -80,10 +80,10 @@ Table of Contents
      7.1.  ICMP Codes  . . . . . . . . . . . . . . . . . . . . . . .  11
      7.2.  New Address Registration Option Status Values . . . . . .  12
      7.3.  New 6LoWPAN Capability Bit  . . . . . . . . . . . . . . .  12
-   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  12
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .  12
+   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  13
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .  13
    10. Informative References  . . . . . . . . . . . . . . . . . . .  14
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  16
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thubert                  Expires 31 January 2026                [Page 2]
+Thubert, et al.          Expires 31 January 2026                [Page 2]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -165,7 +165,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-Thubert                  Expires 31 January 2026                [Page 3]
+Thubert, et al.          Expires 31 January 2026                [Page 3]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -215,20 +215,17 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    *AMR:*  Address Mapping Request
    *ARO:*  Address Registration Option [RFC6775]
    *DAD:*  Duplicate Address Detection [RFC4861]
-   *DAO:*  Destination Advertisement Object [RFC6550]
-   *DODAG:*  Destination-Oriented Directed Acyclic Graph
    *EARO:*  Extended Address Registration Option [RFC8505]
+   *EDAC:*  Extended Duplicate Address Confirmation [RFC8505]
+   *EDAR:*  Extended Duplicate Address Request [RFC8505]
 
 
 
-Thubert                  Expires 31 January 2026                [Page 4]
+Thubert, et al.          Expires 31 January 2026                [Page 4]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
-   *EDAC:*  Extended Duplicate Address Confirmation [RFC8505]
-   *EDAR:*  Extended Duplicate Address Request [RFC8505]
-   *ESS:*  Extended Service Set [IEEE Std 802.11]
    *IPAM:*  IP Address Management
    *LLN:*  Low-Power and Lossy Network
    *LLA:*  Link Layer Address
@@ -277,7 +274,10 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-Thubert                  Expires 31 January 2026                [Page 5]
+
+
+
+Thubert, et al.          Expires 31 January 2026                [Page 5]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -288,8 +288,8 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    LLNs as a single IPv6 Subnet, with a number of 6BBRs providing proxy-
    ND services to their attached LLNs.
 
-   A collection of IPv6 Nodes are present on the Backbone and use IPv6
-   ND [RFC4861][RFC4862] procedures for DAD and Lookup.
+   A collection of IPv6 Nodes are present on the Backbone side and use
+   IPv6 ND [RFC4861][RFC4862] procedures for DAD and Lookup.
 
    The LLN may be a hub-and-spoke access link such as (Low-Power) Wi-Fi
    [IEEE Std 802.11] and Bluetooth (Low Energy) [IEEE Std 802.15.1], or
@@ -305,7 +305,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
                  +-----+               +-----+       +-----+
                     |  Backbone side      |             |
         ----+-------+-----------------+---+-------------+----+-----
-            |                         |                      |
+            |    LLN Side             |                      |
          +------+                 +------+                +------+
          | 6BBR |                 | 6BBR |                | 6BBR |
          |      |                 |      |                |      |
@@ -318,30 +318,30 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
          LLN                        LLN                      LLN
 
-                      Figure 1: Backbone Link and 6LBR
+   Figure 1: LLN's Connectivity through 6BBR's to Backbone Link and 6LBR
 
    A 6LBR provides registration services for the purpose of proactive
    IPv6 ND and maintains a registry of the active registrations for
    unicast and anycast IPv6 addresses as an abstract data structure
-   called an Address Registrar.  An entry in the Address Registrar is
+   called an "Address Registrar".  An entry in the Address Registrar is
    called an "Address Registration".
 
-   The Address Registration retains:
+   *The Address Registration retains:*
 
-   *  the value for the ROVR associated to the registration, the current
+   *  The value for the ROVR associated to the registration, the current
       value of the TID, and the remaining Lifetime.
 
 
 
-Thubert                  Expires 31 January 2026                [Page 6]
+Thubert, et al.          Expires 31 January 2026                [Page 6]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
-   *  a list of LLAs that are associated with the IPv6 address and can
-      be used in a TLLAO as a response to a lookup.
+   *  A list of LLA's (Link Layer Address) that are associated with the
+      IPv6 address and can be used in a TLLAO as a response to a lookup.
 
-   Examples where more than one address may be available include the
+   Examples where more than one IP address may be available include the
    case of an anycast address and the case of an LLN address that is
    proxied by more than one 6BBR.
 
@@ -351,12 +351,12 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
       of unicast and anycast addresses including those with link-local
       scope.
 
-   *  Based on that entry, it provides duplicate avoidance services
-      within the scope of its Address Registrar.
+   *  Based on that entry, it provides Duplicate Address Avoidance (DAA)
+      services within the scope of its Address Registrar.
 
-   *  The 6LBR also provides address lookup services for the Registered
-      Address using unicast ICMPv6 DAR and DAC-based Address Mapping
-      messages.
+   *  The 6LBR also provides Address Lookup services for the Registered
+      Address using unicast ICMPv6 DAR and DAC (As per [RFC8505] EDAR
+      and EDAC) based Address Mapping messages.
 
    The Address Mapping messages can be exchanged using global unicast
    addresses as source and destination addresses, so they can be used
@@ -376,11 +376,11 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    This specification leverages the capability to insert IPv6 ND options
    in the EDAR and EDAC messages that was introduced in [RFC8929].
 
-   It extends DAR and DAR ICMP messages for address lookup in
+   It extends DAR and DAR ICMP messages for Address Lookup in
    Section 4.1.2 that use the same ICMP types as EDAR and EDAC but a
    different Code Prefix.
 
-   It also adds a new Status "Not Found" in Section 4.1.3) that
+   It also adds a new Status "Address Not Found" in Section 4.1.3) that
    indicates that the address being searched is not present in the
    Address Registrar.
 
@@ -389,7 +389,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-Thubert                  Expires 31 January 2026                [Page 7]
+Thubert, et al.          Expires 31 January 2026                [Page 7]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -445,7 +445,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-Thubert                  Expires 31 January 2026                [Page 8]
+Thubert, et al.          Expires 31 January 2026                [Page 8]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
@@ -462,22 +462,22 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    The Extended Address Registration Option (EARO) is defined in section
    4.1 of [RFC8505].  It contains a Status field that is common with
    with the EDAR and EDAC messages defined in section 4.2 of [RFC8505].
-   This specification defines a new Status "Not Found" as indicated in
-   Table 1
+   This specification defines a new Status "Address Not Found" as
+   indicated in Table 1
 
-       +-------+---------------------------------------------------+
-       | Value | Description                                       |
-       +-------+---------------------------------------------------+
-       | 0..10 | As defined in [RFC6775] and [RFC8505]             |
-       +-------+---------------------------------------------------+
-       | 11    | Not Found: The address is not present in the      |
-       |       | Address Registrar (value to be confirmed by IANA) |
-       +-------+---------------------------------------------------+
+     +-------+------------------------------------------------------+
+     | Value | Description                                          |
+     +-------+------------------------------------------------------+
+     | 0..10 | As defined in [RFC6775] and [RFC8505]                |
+     +-------+------------------------------------------------------+
+     | 11    | Address Not Found: The address is not present in the |
+     |       | Address Registrar (value to be confirmed by IANA)    |
+     +-------+------------------------------------------------------+
 
-                            Table 1: EARO Status
+                           Table 1: EARO Status
 
-   The Status of "Not Found" can be used in an NA(EARO) and in an AMC
-   messages as a response to an address lookup operation.
+   The Status of "Address Not Found" can be used in an NA(EARO) and in
+   an AMC messages as a response to an address lookup operation.
 
 4.2.  Address Mapping Messages
 
@@ -501,15 +501,16 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-Thubert                  Expires 31 January 2026                [Page 9]
+Thubert, et al.          Expires 31 January 2026                [Page 9]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
    *  If the address is not present in the Address Registrar then the
-      6LBR MUST set the status to "Not Found".  The Code Suffix MUST be
-      set to 0 indicating a ROVR Length of 64 bits.  The ROVR, TID and
-      Lifetime fields MUST be set to 0 and ignored by the receiver.
+      6LBR MUST set the status to "Address Not Found".  The Code Suffix
+      MUST be set to 0 indicating a ROVR Length of 64 bits.  The ROVR,
+      TID and Lifetime fields MUST be set to 0 and ignored by the
+      receiver.
 
    *  Else if the address is present in the Address Registrar then the
       AMC fields MUST be set from the ROVR, TID and remaining Lifetime
@@ -541,8 +542,8 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    The 6LBR MUST respond with an NA message that contains an EARO.
 
    *  If the address is not present in the Address Registrar then the
-      6LBR MUST set the status to "Not Found".  The ROVR, TID and
-      Lifetime fields MUST be set to 0 and ignored by the receiver.
+      6LBR MUST set the status to "Address Not Found".  The ROVR, TID
+      and Lifetime fields MUST be set to 0 and ignored by the receiver.
 
    *  Else if the address is present in the Address Registrar then the
       EARO fields MUST be set from the ROVR, TID and remaining Lifetime
@@ -552,15 +553,17 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    *  If at least one LLA is found in the Address Registration, then the
       6LBR MUST place one in a TLLAO option in the NA message.
 
-   The NA is sent unicast from link-local address of the 6LBR to the
-   link-local address of the querier.
 
 
 
-Thubert                  Expires 31 January 2026               [Page 10]
+
+Thubert, et al.          Expires 31 January 2026               [Page 10]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
+
+   The NA is sent unicast from link-local address of the 6LBR to the
+   link-local address of the querier.
 
 5.  Backward Compatibility
 
@@ -599,6 +602,22 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
    The new registries are to be initialized as follows:
 
+
+
+
+
+
+
+
+
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 11]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
+
        +---------------+-----------------------------+-------------+
        | *Code Prefix* | *Meaning*                   | *Reference* |
        +---------------+-----------------------------+-------------+
@@ -610,13 +629,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
        +---------------+-----------------------------+-------------+
 
          Table 2: Type 157 - Duplicate Address Request Code Prefix
-
-
-
-Thubert                  Expires 31 January 2026               [Page 11]
-
-Internet-Draft           IPv6 ND Unicast Lookup                July 2025
-
 
        +---------------+-----------------------------+-------------+
        | *Code Prefix* | *Meaning*                   | *Reference* |
@@ -638,14 +650,14 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    "Internet Control Message Protocol version 6 (ICMPv6) Parameters", as
    follows:
 
-            +------------------+---------------+-------------+
-            | *Value*          | *Description* | *Reference* |
-            +------------------+---------------+-------------+
-            | *13 (suggested)* | Not Found     | This RFC    |
-            +------------------+---------------+-------------+
+          +------------------+-------------------+-------------+
+          | *Value*          | *Description*     | *Reference* |
+          +------------------+-------------------+-------------+
+          | *13 (suggested)* | Address Not Found | This RFC    |
+          +------------------+-------------------+-------------+
 
-                 Table 4: New Address Registration Option
-                              Status Values"
+             Table 4: New Address Registration Option Status
+                                 Values"
 
 7.3.  New 6LoWPAN Capability Bit
 
@@ -653,6 +665,14 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    Bits" [IANA.ICMP.6CIO] registry under the heading "Internet Control
    Message Protocol version 6 (ICMPv6) Parameters" as indicated in
    Table 5:
+
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 12]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
 
           +------------------+--------------------+-------------+
           | *Bit*            | *Description*      | *Reference* |
@@ -666,13 +686,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 9.  Normative References
-
-
-
-Thubert                  Expires 31 January 2026               [Page 12]
-
-Internet-Draft           IPv6 ND Unicast Lookup                July 2025
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -709,6 +722,14 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 13]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
+
    [RFC8505]  Thubert, P., Ed., Nordmark, E., Chakrabarti, S., and C.
               Perkins, "Registration Extensions for IPv6 over Low-Power
               Wireless Personal Area Network (6LoWPAN) Neighbor
@@ -719,16 +740,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               Discovery Multicast and Anycast Addresses", RFC 9685,
               DOI 10.17487/RFC9685, November 2024,
               <https://www.rfc-editor.org/info/rfc9685>.
-
-
-
-
-
-
-Thubert                  Expires 31 January 2026               [Page 13]
-
-Internet-Draft           IPv6 ND Unicast Lookup                July 2025
-
 
    [I-D.ietf-6lo-prefix-registration]
               Thubert, P., "IPv6 Neighbor Discovery Prefix
@@ -766,6 +777,15 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               DOI 10.17487/RFC6282, September 2011,
               <https://www.rfc-editor.org/info/rfc6282>.
 
+
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 14]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
+
    [RFC6550]  Winter, T., Ed., Thubert, P., Ed., Brandt, A., Hui, J.,
               Kelsey, R., Levis, P., Pister, K., Struik, R., Vasseur,
               JP., and R. Alexander, "RPL: IPv6 Routing Protocol for
@@ -777,14 +797,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               "Address-Protected Neighbor Discovery for Low-Power and
               Lossy Networks", RFC 8928, DOI 10.17487/RFC8928, November
               2020, <https://www.rfc-editor.org/info/rfc8928>.
-
-
-
-
-Thubert                  Expires 31 January 2026               [Page 14]
-
-Internet-Draft           IPv6 ND Unicast Lookup                July 2025
-
 
    [RFC8929]  Thubert, P., Ed., Perkins, C.E., and E. Levy-Abegnoli,
               "IPv6 Backbone Router", RFC 8929, DOI 10.17487/RFC8929,
@@ -822,6 +834,14 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               802.11 - IEEE Standard for Information Technology -
               Telecommunications and information exchange between
               systems Local and metropolitan area networks - Specific
+
+
+
+Thubert, et al.          Expires 31 January 2026               [Page 15]
+
+Internet-Draft           IPv6 ND Unicast Lookup                July 2025
+
+
               requirements - Part 11: Wireless LAN Medium Access Control
               (MAC) and Physical Layer (PHY) Specifications.",
               <https://ieeexplore.ieee.org/document/9363693>.
@@ -835,14 +855,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
               Layer (PHY) Specifications for Wireless Personal Area
               Networks (WPANs)".
 
-
-
-Thubert                  Expires 31 January 2026               [Page 15]
-
-Internet-Draft           IPv6 ND Unicast Lookup                July 2025
-
-
-Author's Address
+Authors' Addresses
 
    Pascal Thubert (editor)
    Without Affiliation
@@ -851,6 +864,19 @@ Author's Address
    Email: pascal.thubert@gmail.com
 
 
+   Adnan Rashid
+   Politecnico di Bari
+   Via Edoardo Orabona 4
+   70126 Bari
+   Italy
+   Email: adnan.rashid@poliba.it
+
+
+   Tommaso Pecorella
+   University of Florence
+   50139 Florence
+   Italy
+   Email: tommaso.pecorella@unifi.it
 
 
 
@@ -867,30 +893,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Thubert                  Expires 31 January 2026               [Page 16]
+Thubert, et al.          Expires 31 January 2026               [Page 16]

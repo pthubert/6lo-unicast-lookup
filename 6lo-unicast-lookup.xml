@@ -38,6 +38,30 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
       </address>
    </author>
 
+   <author initials="A" surname="Rashid" fullname="Adnan Rashid">
+<organization abbrev="Politecnico di Bari">Politecnico di Bari</organization>
+<address>
+<postal>
+<street>Via Edoardo Orabona 4</street>
+<city>Bari</city>
+<code>70126</code>
+<country>Italy</country>
+</postal>
+<email>adnan.rashid@poliba.it</email>
+</address>
+</author>
+<author initials="T" surname="Pecorella" fullname="Tommaso Pecorella">
+<organization abbrev="University of Florence">University of Florence</organization>
+<address>
+<postal>
+<city>Florence</city>
+<code>50139</code>
+<country>Italy</country>
+</postal>
+<email>tommaso.pecorella@unifi.it</email>
+</address>
+</author>
+
 
    <area>Internet</area>
 
@@ -207,12 +231,12 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
        <dt><strong>AMR:</strong></dt><dd> Address Mapping Request</dd>
        <dt><strong>ARO:</strong></dt><dd> Address Registration Option  <xref target="RFC6775"/></dd>
        <dt><strong>DAD:</strong></dt><dd> Duplicate Address Detection <xref target="RFC4861"/></dd>
-       <dt><strong>DAO:</strong></dt><dd> Destination Advertisement Object <xref target="RFC6550"/> </dd>
-       <dt><strong>DODAG:</strong></dt><dd> Destination-Oriented Directed Acyclic Graph </dd>
+       <!-- <dt><strong>DAO:</strong></dt><dd> Destination Advertisement Object <xref target="RFC6550"/> </dd> -->
+       <!-- <dt><strong>DODAG:</strong></dt><dd> Destination-Oriented Directed Acyclic Graph </dd> -->
        <dt><strong>EARO:</strong></dt><dd> Extended Address Registration Option <xref target="RFC8505"/></dd>
        <dt><strong>EDAC:</strong></dt><dd> Extended Duplicate Address Confirmation <xref target="RFC8505"/> </dd>
        <dt><strong>EDAR:</strong></dt><dd> Extended Duplicate Address Request <xref target="RFC8505"/></dd>
-	   <dt><strong>ESS:</strong></dt><dd> Extended Service Set <xref target="IEEE80211"/></dd>
+	   <!-- <dt><strong>ESS:</strong></dt><dd> Extended Service Set <xref target="IEEE80211"/></dd> -->
 	   <dt><strong>IPAM:</strong></dt><dd> IP Address Management</dd>
        <dt><strong>LLN:</strong></dt><dd> Low-Power and Lossy Network </dd>
        <dt><strong>LLA:</strong></dt><dd> Link Layer Address </dd>
@@ -293,7 +317,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     providing proxy-ND services to their attached LLNs.
     </t>
     <t>
-    A collection of IPv6 Nodes are present on the Backbone and use IPv6 ND
+    A collection of IPv6 Nodes are present on the Backbone side and use IPv6 ND
     <xref target="RFC4861"/><xref target="RFC4862"/> procedures for
     DAD and Lookup.
     </t>
@@ -307,7 +331,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     </t>
 
 
-    <figure anchor='figBackbone'><name>Backbone Link and 6LBR</name>
+    <figure anchor='figBackbone'><name>LLN's Connectivity through 6BBR's to Backbone Link and 6LBR</name>
     <artwork><![CDATA[
                  |
                  |
@@ -317,7 +341,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
               +-----+               +-----+       +-----+
                  |  Backbone side      |             |
      ----+-------+-----------------+---+-------------+----+-----
-         |                         |                      |
+         |    LLN Side             |                      |
       +------+                 +------+                +------+
       | 6BBR |                 | 6BBR |                | 6BBR |
       |      |                 |      |                |      |
@@ -335,24 +359,23 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     <t>
     A 6LBR provides registration services for the purpose of proactive IPv6 ND
     and maintains a registry of the active registrations for unicast and anycast
-    IPv6 addresses as an abstract data structure called an Address Registrar.
+    IPv6 addresses as an abstract data structure called an "Address Registrar".
     An entry in the Address Registrar is called an "Address Registration".
     </t>
 
-    <t>
-    The Address Registration retains:</t>
+<t><strong>The Address Registration retains:</strong></t>
     <ul>
         <li>
-        the value for the ROVR associated to the registration, the current
+        The value for the ROVR associated to the registration, the current
         value of the TID, and the remaining Lifetime.
         </li>
         <li>
-        a list of LLAs that are associated with the IPv6 address and can be
+        A list of LLA's (Link Layer Address) that are associated with the IPv6 address and can be
         used in a TLLAO as a response to a lookup.
         </li>
     </ul>
     <t>
-    Examples where more than one address may be available include the case of
+    Examples where more than one IP address may be available include the case of
     an anycast address and the case of an LLN address that is proxied by more
     than one 6BBR.
     </t>
@@ -366,12 +389,12 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
         unicast and anycast addresses including those with link-local scope.
         </li>
         <li>
-        Based on that entry, it provides duplicate avoidance services within the
+        Based on that entry, it provides Duplicate Address Avoidance (DAA) services within the
         scope of its Address Registrar.
         </li>
         <li>
-        The 6LBR also provides address lookup services for the Registered
-        Address using unicast ICMPv6 DAR and DAC-based Address Mapping messages.
+        The 6LBR also provides Address Lookup services for the Registered
+        Address using unicast ICMPv6 DAR and DAC (As per <xref target="RFC8505"/> EDAR and EDAC) based Address Mapping messages.
         </li>
     </ul>
     <t>
@@ -405,13 +428,13 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    </t>
 
    <t>
-	It extends DAR and DAR ICMP messages for address lookup
+	It extends DAR and DAR ICMP messages for Address Lookup
     in <xref target="DAM"/> that use the same ICMP types as EDAR and EDAC but a
     different Code Prefix.
    </t>
 
    <t>
-    It also adds a new Status "Not Found" in
+    It also adds a new Status Value "Address Not Found" in
     <xref target="earo"/>) that indicates that the address being searched is
     not present in the Address Registrar.
    </t>
@@ -487,7 +510,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     of <xref target="RFC8505"/>. It contains a Status field that is common with
     with the EDAR and EDAC messages defined in section 4.2 of
     <xref target="RFC8505"/>.
-    This specification defines a new Status "Not Found" as indicated in
+    This specification defines a new Status "Address Not Found" as indicated in
     <xref target="AROstatus"/>
     </t>
 
@@ -499,12 +522,12 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
          <td>As defined in <xref target="RFC6775"/> and <xref target="RFC8505"/>
                 </td></tr>
    <tr><td>11</td>
-         <td>Not Found: The address is not present in the Address Registrar (value to be confirmed by IANA)
+         <td>Address Not Found: The address is not present in the Address Registrar (value to be confirmed by IANA)
                 </td></tr>
     </tbody>
 	</table> <!-- end table "EARO Status" -->
     <t>
-    The Status of "Not Found" can be used in an NA(EARO) and in an AMC messages
+    The Status of "Address Not Found" can be used in an NA(EARO) and in an AMC messages
     as a response to an address lookup operation.
     </t>
 
@@ -537,7 +560,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     ICMPv6 Type of 158 and a Code Prefix of 1.</t>
     <ul>
        <li> If the address is not present in the Address Registrar then the 6LBR
-       MUST set the status to "Not Found". The Code Suffix MUST be set to 0
+       MUST set the status to "Address Not Found". The Code Suffix MUST be set to 0
        indicating a ROVR Length of 64 bits. The ROVR, TID and Lifetime fields
        MUST be set to 0 and ignored by the receiver.
        </li>
@@ -585,7 +608,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     </t>
     <ul>
        <li> If the address is not present in the Address Registrar then the 6LBR
-       MUST set the status to "Not Found". The ROVR, TID and Lifetime fields
+       MUST set the status to "Address Not Found". The ROVR, TID and Lifetime fields
        MUST be set to 0 and ignored by the receiver.
        </li>
        <li>
@@ -697,7 +720,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    <thead>
       <tr><td><strong>Value</strong> </td><td><strong>Description</strong></td><td><strong>Reference</strong></td></tr>
    </thead><tbody>
-      <tr><td><strong>13 (suggested)</strong></td><td>Not Found</td><td>This RFC</td></tr>
+      <tr><td><strong>13 (suggested)</strong></td><td>Address Not Found</td><td>This RFC</td></tr>
 
    </tbody>
 	</table>	<!-- end table "New Address Registration Option Status Values" -->
