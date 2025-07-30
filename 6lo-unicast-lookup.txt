@@ -380,8 +380,8 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    Section 4.1.2 that use the same ICMP types as EDAR and EDAC but a
    different Code Prefix.
 
-   It also adds a new Status "Address Not Found" in Section 4.1.3) that
-   indicates that the address being searched is not present in the
+   It also adds a new Status Value "Address Not Found" in Section 4.1.3)
+   that indicates that the address being searched is not present in the
    Address Registrar.
 
 
