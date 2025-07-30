@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent">
+<!-- <!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent"> -->
 
 
 <?rfc toc="yes"?>
@@ -22,10 +22,10 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 <front>
 
    <title abbrev='IPv6 ND Unicast Lookup'>IPv6 Neighbor Discovery Unicast Lookup</title>
-
+   
 
    <author initials='P' surname='Thubert' fullname='Pascal Thubert' role='editor'>
-      <!-- <organization abbrev='Cisco Systems'>Cisco Systems, Inc</organization> -->
+      <organization abbrev=''>Without Affiliation</organization> 
       <address>
          <postal>
             <city>Roquefort-les-Pins</city>
@@ -36,22 +36,6 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
       </address>
    </author>
 
-    <author fullname="Eric Levy-Abegnoli" initials="E.L.A."
-							surname="Levy-Abegnoli">
-      <organization abbrev="Cisco Systems">Cisco Systems, Inc</organization>
-      <address>
-         <postal>
-		 <street>Building D</street>
-		 <street>45 Allee des Ormes - BP1200 </street>
-            <city>MOUGINS - Sophia Antipolis</city>
-            <code>06254</code>
-            <country>FRANCE</country>
-         </postal>
-         <phone>+33 497 23 26 20</phone>
-         <email>elevyabe@cisco.com</email>
-      </address>
-    </author>
-   <date/>
 
    <area>Internet</area>
 
@@ -72,8 +56,22 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 <!-- **************************************************************** -->
 <!-- **************************************************************** -->
 <!-- **************************************************************** -->
-<section anchor="introduction"> <name>Introduction</name>
+<section anchor="introduction"> <name>Introduction</name><t>
+   The <xref target="I-D.ietf-6man-ipv6-over-wireless">
+   "Architecture and Framework for IPv6 over Non-Broadcast Access" (NBMA)</xref>
+   introduces an evolution of IPv6 ND towards a proactive Address Registration (AR) method.
+   Because the IPv6 model for
+   NBMA depends on a routing protocol to reach inside the Subnet, the
+   IPv6 ND extension for NBMA is referred to as Subnet Neighbor Discovery (SND).
+   SND is based on work done in the context of IoT, known as 6LoWPAN ND.
+   The components of SND that specify the various forms of registration are 
+   <xref target="RFC6775"/>, <xref target="RFC8505"/>,
+   <xref target="RFC9685"/>, and <xref target="I-D.ietf-6lo-prefix-registration"/>.
+   In addition, the registration can be secured with <xref target="RFC8928"/>, 
+   and proxy operations are enabled with <xref target="RFC8929"/>.
+</t>
     <t>
+    
     <xref target="RFC8505"/> defines the Routing Registrar and extends
     <xref target="RFC6775"/> to use a 6LoWPAN Border Router (6LBR) as a central
     service for Address Registration and duplicate detection amongst Routing
@@ -98,7 +96,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     duplications. The ROVR can also be used as a proof-of-ownership
     (see <xref target="RFC8928"/>) to protect the Registered
     address against theft and impersonation attacks
-    (more in <xref target="I-D.bi-savi-wlan"/>).
+    (more in <xref target="I-D.bi-intarea-savi-wlan"/>).
     Conflicting registrations to different 6BBRs for the same Registered address
     are resolved using the TID field, which creates a temporal order and enables
     to recognize the freshest registration.
@@ -118,7 +116,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     </t>
 
 
-	<t><xref target="I-D.ietf-6lo-multicast-registration">"IPv6 Neighbor
+	<t><xref target="RFC9685">"IPv6 Neighbor
     Discovery Multicast Address Listener Registration"</xref> extends <xref
     target="RFC8505"/> to register anycast and multicast addresses. This entails
     accepting more than one registration for the same address and the use of
@@ -421,18 +419,19 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     for use in IPv6 ND messages.
     </t>
     <t>
-	The new "A" bit indicates that the 6LBR provides address mapping
+	The new "U" bit indicates that the 6LBR provides address mapping
     services per this specification.
     </t>
     <figure anchor='fig6CIO'><name>New Capability Bits in the 6CIO</name>
     <artwork>
     <![CDATA[
+
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |     Type      |   Length = 1  |     Reserved    |A|D|L|B|P|E|G|
+   |     Type      |   Length = 1  | Experimental  |X|A|D|L|B|P|E|G|
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                           Reserved                            |
+   |F|   |U|                       Reserved                        |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     ]]></artwork>
     </figure>
@@ -440,7 +439,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     <t> Option Fields:    </t>
 	<dl>
 	<dt>Type</dt><dd> 36 </dd>
-	<dt>A</dt><dd> The 6LBR provides address mapping services.  </dd>
+	<dt><strong>U</strong></dt><dd> The 6LBR provides address mapping services.  </dd>
 	</dl>
 
     </section>	<!-- end section "Extending the Capability Indication Option" -->
@@ -662,37 +661,48 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
     </section>	<!-- end section "ICMP Codes" -->
 
-    <section><name>New ARO Status values</name>
-	<t> IANA is requested to make additions to the Address Registration
-	    Option Status Values Registry as follows:
-	</t>
 
-	<table anchor="AROstat" ><name>New ARO Status values</name>
-   <thead>
-      <tr><td>ARO Status</td><td>Meaning</td><td>Reference</td></tr>
-   </thead><tbody>
-      <tr><td>11 (suggested)</td><td>Not Found</td><td>This RFC</td></tr>
-   </tbody>
-	</table>	<!-- end table "New ARO Status values" +-->
-    </section>	<!-- end section "New ARO Status values" -->
 
-    <section title="New 6LoWPAN Capability Bits">
+    <section title="New Address Registration Option Status Values">
 	<t>
-    IANA is requested to make additions to the Subregistry for
-    "6LoWPAN Capability Bits" as follows:
+   IANA is requested to make additions to the "Address Registration Option Status
+   Values" <xref target="IANA.ICMP.ARO.STAT"/> registry under the heading "Internet Control Message
+   Protocol version 6 (ICMPv6) Parameters", as follows:
 	</t>
 
-	<table anchor="CIOdat" ><name>New 6LoWPAN Capability Bits</name>
+	<table anchor="AROstat" ><name>New Address Registration Option Status Values"</name>
    <thead>
-      <tr><td>Capability Bit</td><td>Meaning</td><td>Reference</td></tr>
+      <tr><td>Value </td><td>Description</td><td>Reference</td></tr>
    </thead><tbody>
-      <tr><td>9 (suggested)</td><td>AM Support (A bit)</td><td>This RFC</td></tr>
+      <tr><td><strong>13 (suggested)</strong></td><td>Not Found</td><td>This RFC</td></tr>
 
    </tbody>
+	</table>	<!-- end table "New Address Registration Option Status Values" -->
+    </section>	<!-- end section "New Address Registration Option Status Values" -->
+
+
+
+
+    <section anchor="CIOF">   <name>New 6LoWPAN Capability Bit</name>
+	<t>
+    IANA is requested to make an addition to the
+    "6LoWPAN Capability Bits" <xref target="IANA.ICMP.6CIO"/> registry under the
+    heading "Internet Control Message Protocol version 6 (ICMPv6) Parameters"
+    as indicated in <xref target="CIOdat"/>:
+	</t>
+	<table anchor="CIOdat" ><name>New 6LoWPAN Capability Bit</name>
+   <thead>
+      <tr><td>Bit</td><td>Description</td><td>Reference</td></tr>
+   </thead><tbody>
+      <tr><td><strong>19 (suggested)</strong></td><td>AM Support (U bit)</td><td>This RFC</td></tr>
+
+   </tbody>
+   
 	</table>	<!-- end table "New 6LoWPAN Capability Bits" -->
     </section>	<!-- end section "New 6LoWPAN Capability Bits" -->
+    
 </section>	<!-- end section "IANA Considerations" -->
-
+   
 <section title="Acknowledgments">
 <t>
 
@@ -727,10 +737,38 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8505.xml'/>
-    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6lo-multicast-registration.xml'/>
-    </references>
+	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9685.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6lo-prefix-registration.xml'/>
+    
+       <reference anchor="IANA.ICMP.ARO.STAT">
+       <front>
+			<title>IANA Registry for the Address Registration Option Status Value</title>
+			<author>
+				<organization>
+					IANA
+				</organization>
+			</author>
+			<date year=""></date>
+		</front>
+		<seriesInfo name="IANA," value=
+		"https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#address-registration"></seriesInfo>
+	   </reference>
+
+       <reference anchor="IANA.ICMP.6CIO">
+       <front>
+			<title>IANA Registry for the 6LoWPAN Capability Bits</title>
+			<author>
+				<organization>
+					IANA
+				</organization>
+			</author>
+			<date year=""></date>
+		</front>
+		<seriesInfo name="IANA," value="https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#sixlowpan-capability-bits"></seriesInfo>
+	   </reference>
 
 
+	   </references>
     <references title='Informative References'>
 	<!-- RFC  -->
 
@@ -741,8 +779,8 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8928.xml'/>
 	<xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8929.xml'/>
 	<xi:include href= 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mboned-ieee802-mcast-problems.xml'/>
-    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.bi-savi-wlan.xml'/>
-    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.thubert-6man-ipv6-over-wireless.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.bi-intarea-savi-wlan.xml'/>
+    <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-ipv6-over-wireless.xml'/>
     <xi:include href='https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.heile-lpwan-wisun-overview.xml'/>
 
 
