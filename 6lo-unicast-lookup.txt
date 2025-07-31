@@ -493,7 +493,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
    A 6LBR signals that support by setting the B-flag in the 6CIO of the
    RA messages that it generates.  A 6LBR that supports this
-   specification MUST also set the "A" bit, indicating support of the
+   specification MUST also set the U-flag, indicating support of the
    Address Mapping messages for address lookup.
 
 
