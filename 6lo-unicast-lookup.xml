@@ -499,18 +499,18 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
     <section anchor='DAM'><name>New Code Prefix for Address Mapping Messages</name>
     <t>
-	The Extended Duplicate Address messages share a common base format defined
-    in section 4.2 of <xref target="RFC8505"/>, with the ICMP type respectively
+	The Extended Duplicate Address messages (EDAR and EDAC) share a common base format defined
+    in section 4.2 of <xref target="RFC8505"/>, with the ICMPv6 type respectively
     set to 157 and 158 that is inherited from the DAR and DAC messages defined
-    in section 4.4 of <xref target="RFC6775"/>. The ICMP Code is split in two
+    in section 4.4 of <xref target="RFC6775"/>. The ICMPv6 Code is split in two
     4-bit fields, the Code Prefix and the Code Suffix, and the only Code
-    Prefix defined in <xref target="RFC8505"/> is 0, signaling a DAD.
+    Prefix defined in <xref target="RFC8505"/> is 0, signaling a DAD operation.
     </t>
     <t>
-    The Address Mapping messages use the same values for the ICMP Type as the
-    corresponding Extended Duplicate Address messages.
+    The Address Mapping messages use the same values for the ICMPv6 Type as the
+    corresponding Extended Duplicate Address (EDAR and EDAC) messages.
     This specification adds the Code Prefix of 1 to signal Address Mapping.
-    ICMP messages with the ICMP type set to 157 or 158, and a Code Prefix of 1
+    ICMPv6 messages with the ICMPv6 type set to 157 or 158, and a Code Prefix of 1
     are thus respectively an Address Mapping Request (AMR) and an Address
     Mapping Confirm (AMC).
     </t>
@@ -595,7 +595,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
     <t>
     A 6LBR that is deployed on-link SHOULD provide NS/NA-based services. It
-    signals that support by setting the "L" bit in the 6CIO of the RA
+    signals that support by setting the L-flag in the 6CIO of the RA
     messages that it generates, indicating that it is a 6LR
     <xref target="RFC8505"/>.
     </t>
@@ -667,29 +667,25 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     registry, as follows.
 </t>
 
-    <section><name>ICMP Codes</name>
+    <section><name>ICMPv6 Codes</name>
     <t>
     
-   IANA is requested to create two registries in the 'ICMPv6 "Code" Fields' <xref target="IANA.ICMP.CODE"/> registry under the heading "Internet Control Message Protocol version 6 (ICMPv6) Parameters", as follows:
+   IANA is requested to create two registries in the ICMPv6 "Code" Fields <xref target="IANA.ICMP.CODE"/> registry 
+   under the heading "Internet Control Message Protocol version 6 (ICMPv6) Parameters", as follows:
 	</t>
 
-
-   <t>
-
-   The new registries relate to the ICMPv6 type
-   157, Duplicate Address Request (shown in <xref target="DARcode"/>), and
-   158, Duplicate Address Confirmation (shown in <xref target="DACcode"/>),
-   respectively. For those two ICMP types, the ICMP Code field is split
-	into 2 subfields, the "Code Prefix" and the "Code Suffix".  Registries 
-   related to the "Code Suffix" were created in  <xref target="IANA.ICMP.CODE"/> 
-   upon publication of <xref target="RFC8505"/>.
+    <t>
+   The new registries related to the ICMPv6 Type 157, Duplicate Address Request (DAR) (shown in <xref target="DARcode"/>), 
+   and Type 158, Duplicate Address Confirmation (DAC) (shown in <xref target="DACcode"/>),
+   respectively. For those two ICMPv6 types, the ICMPv6 Code field is split
+	into 2 subfields, the "Code Prefix" and the "Code Suffix". Registries related to the "Code Suffix" 
+    were created in <xref target="IANA.ICMP.CODE"/> upon the publication of <xref target="RFC8505"/>.
    
    
-   </t><t>The new	registries relate to the "Code Prefix" portion of the ICMP Code.
-        The range of "Code Prefix" is 0..15 in all cases.
-        
-        The policy is "IETF Review" or "IESG Approval" <xref target="RFC8126"/>
-        for both registries.
+   </t><t>The new registries relate to the "Code Prefix" portion of the ICMP Code.
+    The range of "Code Prefix" is 0-to-15 in all cases.
+ 
+    The policy is "IETF Review" or "IESG Approval" <xref target="RFC8126"/> or both registries.
     </t>
     <t>
         The new registries are to be initialized as follows:
@@ -752,7 +748,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    <thead>
       <tr><td><strong>Bit</strong></td><td><strong>Description</strong></td><td><strong>Reference</strong></td></tr>
    </thead><tbody>
-      <tr><td><strong>19 (suggested)</strong></td><td>Address Mapping Support (U-flag)</td><td>This RFC</td></tr>
+      <tr><td><strong>18 (suggested)</strong></td><td>Address Mapping Support (U-flag)</td><td>This RFC</td></tr>
 
    </tbody>
    

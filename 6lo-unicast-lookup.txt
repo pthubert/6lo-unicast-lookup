@@ -87,7 +87,7 @@ Table of Contents
    5.  Backward Compatibility  . . . . . . . . . . . . . . . . . . .  11
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-     7.1.  ICMP Codes  . . . . . . . . . . . . . . . . . . . . . . .  11
+     7.1.  ICMPv6 Codes  . . . . . . . . . . . . . . . . . . . . . .  11
      7.2.  New Address Registration Option Status Values . . . . . .  12
      7.3.  New 6LoWPAN Capability Bit  . . . . . . . . . . . . . . .  12
    8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  13
@@ -452,19 +452,20 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 4.1.2.  New Code Prefix for Address Mapping Messages
 
-   The Extended Duplicate Address messages share a common base format
-   defined in section 4.2 of [RFC8505], with the ICMP type respectively
-   set to 157 and 158 that is inherited from the DAR and DAC messages
-   defined in section 4.4 of [RFC6775].  The ICMP Code is split in two
-   4-bit fields, the Code Prefix and the Code Suffix, and the only Code
-   Prefix defined in [RFC8505] is 0, signaling a DAD.
+   The Extended Duplicate Address messages (EDAR and EDAC) share a
+   common base format defined in section 4.2 of [RFC8505], with the
+   ICMPv6 type respectively set to 157 and 158 that is inherited from
+   the DAR and DAC messages defined in section 4.4 of [RFC6775].  The
+   ICMPv6 Code is split in two 4-bit fields, the Code Prefix and the
+   Code Suffix, and the only Code Prefix defined in [RFC8505] is 0,
+   signaling a DAD operation.
 
-   The Address Mapping messages use the same values for the ICMP Type as
-   the corresponding Extended Duplicate Address messages.  This
-   specification adds the Code Prefix of 1 to signal Address Mapping.
-   ICMP messages with the ICMP type set to 157 or 158, and a Code Prefix
-   of 1 are thus respectively an Address Mapping Request (AMR) and an
-   Address Mapping Confirm (AMC).
+   The Address Mapping messages use the same values for the ICMPv6 Type
+   as the corresponding Extended Duplicate Address (EDAR and EDAC)
+   messages.  This specification adds the Code Prefix of 1 to signal
+   Address Mapping.  ICMPv6 messages with the ICMPv6 type set to 157 or
+   158, and a Code Prefix of 1 are thus respectively an Address Mapping
+   Request (AMR) and an Address Mapping Confirm (AMC).
 
 4.1.3.  New ARO Status
 
@@ -495,9 +496,8 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    specification MUST also set the "A" bit, indicating support of the
    Address Mapping messages for address lookup.
 
-   In the Address Mapping flow, the querier IPv6 Node uses an AMR
-   message, which is characterized by an ICMPv6 Type of 157 and a Code
-   Prefix of 1.  When used on-link, the AMR message SHOULD carry a SLLAO
+
+
 
 
 
@@ -506,6 +506,9 @@ Thubert, et al.          Expires 1 February 2026                [Page 9]
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
+   In the Address Mapping flow, the querier IPv6 Node uses an AMR
+   message, which is characterized by an ICMPv6 Type of 157 and a Code
+   Prefix of 1.  When used on-link, the AMR message SHOULD carry a SLLAO
    indicating the LLA of the querier.  The Code Suffix MUST be set to 0
    indicating a ROVR Length of 64 bits.  The ROVR, TID and Lifetime
    fields MUST be set to 0 and ignored by the receiver.
@@ -532,7 +535,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 4.3.  IPv6 ND-based Address Lookup
 
    A 6LBR that is deployed on-link SHOULD provide NS/NA-based services.
-   It signals that support by setting the "L" bit in the 6CIO of the RA
+   It signals that support by setting the L-flag in the 6CIO of the RA
    messages that it generates, indicating that it is a 6LR [RFC8505].
 
    A 6LBR thus typically sets three flags (A, B, and L) when attached to
@@ -550,9 +553,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    *  If the address is not present in the Address Registrar then the
       6LBR MUST set the status to "Address Not Found".  The ROVR, TID
       and Lifetime fields MUST be set to 0 and ignored by the receiver.
-
-
-
 
 
 
@@ -591,24 +591,24 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    Control Message Protocol version 6 (ICMPv6) Parameters" registry, as
    follows.
 
-7.1.  ICMP Codes
+7.1.  ICMPv6 Codes
 
-   IANA is requested to create two registries in the 'ICMPv6 "Code"
-   Fields' [IANA.ICMP.CODE] registry under the heading "Internet Control
+   IANA is requested to create two registries in the ICMPv6 "Code"
+   Fields [IANA.ICMP.CODE] registry under the heading "Internet Control
    Message Protocol version 6 (ICMPv6) Parameters", as follows:
 
-   The new registries relate to the ICMPv6 type 157, Duplicate Address
-   Request (shown in Table 2), and 158, Duplicate Address Confirmation
-   (shown in Table 3), respectively.  For those two ICMP types, the ICMP
-   Code field is split into 2 subfields, the "Code Prefix" and the "Code
-   Suffix".  Registries related to the "Code Suffix" were created in
-   [IANA.ICMP.CODE] upon publication of [RFC8505].
+   The new registries related to the ICMPv6 Type 157, Duplicate Address
+   Request (DAR) (shown in Table 2), and Type 158, Duplicate Address
+   Confirmation (DAC) (shown in Table 3), respectively.  For those two
+   ICMPv6 types, the ICMPv6 Code field is split into 2 subfields, the
+   "Code Prefix" and the "Code Suffix".  Registries related to the "Code
+   Suffix" were created in [IANA.ICMP.CODE] upon the publication of
+   [RFC8505].
 
    The new registries relate to the "Code Prefix" portion of the ICMP
-   Code.  The range of "Code Prefix" is 0..15 in all cases.  The policy
-   is "IETF Review" or "IESG Approval" [RFC8126] for both registries.
-
-   The new registries are to be initialized as follows:
+   Code.  The range of "Code Prefix" is 0-to-15 in all cases.  The
+   policy is "IETF Review" or "IESG Approval" [RFC8126] or both
+   registries.
 
 
 
@@ -617,6 +617,8 @@ Thubert, et al.          Expires 1 February 2026               [Page 11]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
+
+   The new registries are to be initialized as follows:
 
        +---------------+-----------------------------+-------------+
        | *Code Prefix* | *Meaning*                   | *Reference* |
@@ -667,8 +669,6 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
 
 
 
-
-
 Thubert, et al.          Expires 1 February 2026               [Page 12]
 
 Internet-Draft           IPv6 ND Unicast Lookup                July 2025
@@ -677,7 +677,7 @@ Internet-Draft           IPv6 ND Unicast Lookup                July 2025
    +------------------+----------------------------------+-------------+
    | *Bit*            | *Description*                    | *Reference* |
    +------------------+----------------------------------+-------------+
-   | *19 (suggested)* | Address Mapping                  | This RFC    |
+   | *18 (suggested)* | Address Mapping                  | This RFC    |
    |                  | Support (U-flag)                 |             |
    +------------------+----------------------------------+-------------+
 
