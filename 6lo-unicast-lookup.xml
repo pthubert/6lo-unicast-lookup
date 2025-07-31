@@ -62,6 +62,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 <email>adnan.rashid@poliba.it</email>
 </address>
 </author>
+
 <author initials="T" surname="Pecorella" fullname="Tommaso Pecorella">
 <organization abbrev="University of Florence">University of Florence</organization>
 <address>
@@ -285,9 +286,9 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
 	<dl>
 
-	<dt><strong>Address Mapping Request (AMR)</strong></dt><dd> An ICMP message with an ICMP type of 157 (DAR) and a Code Prefix of 1.
+	<dt><strong>Address Mapping Request (AMR):</strong> </dt><dd> An ICMPv6 message with a type of 157 (DAR) and a Code Prefix of 1.
 	</dd>
-	<dt><strong>Address Mapping Confirm (AMC)</strong></dt><dd> An ICMP message with an ICMP type of 158 (DAC) and a Code Prefix of 1.
+	<dt><strong>Address Mapping Confirm (AMC):</strong> </dt><dd> An ICMPv6 message with a type of 158 (DAC) and a Code Prefix of 1.
 	</dd>
     </dl>
 
@@ -296,10 +297,10 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 	</t>
 
 	<dl>
-	<dt>Address Registrar</dt><dd> The Address Registrar is an abstract database that is maintained by the
+	<dt><strong>Address Registrar:</strong> </dt><dd> The Address Registrar is an abstract database that is maintained by the
         6LBR to store the state associated with its registrations.
 	</dd>
-	<dt>Address Registration</dt><dd> An Address Registration is an abstract state associated to one
+	<dt><strong>Address Registration:</strong>  </dt><dd> An Address Registration is an abstract state associated to one
         registration, in other words one entry in the Address Registrar.
     </dd>
 
@@ -439,22 +440,22 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    </t>
 
    <t>
-	It extends DAR and DAR ICMP messages for Address Lookup
+	It extends ICMPv6 DAR and DAR messages for Address Lookup
     in <xref target="DAM"/> that use the same ICMP types as EDAR and EDAC but a
     different Code Prefix.
    </t>
 
    <t>
     It also adds a new Status Value "Address Not Found" in
-    <xref target="earo"/>) that indicates that the address being searched is
+    <xref target="earo"/> that indicates that the address being searched is
     not present in the Address Registrar.
    </t>
 
    <t>
-   A 6LBR signals itself by setting the "B" bit in the 6CIO of the RA
+   A 6LBR signals itself by setting the B-flag in the 6CIO of the RA
    messages that it generates <xref target="RFC8505"/>.
-   This specification adds a new "A" bit in the 6CIO to indicate support of
-   address mapping (see <xref target="CIO"/>).
+   This specification adds a new U-flag in the 6CIO to indicate support of
+   Address Mapping (see <xref target="CIO"/>).
    </t>
 
 
@@ -463,17 +464,17 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    <t>This specification does not introduce new options; it modifies
    existing options and updates the associated behaviors.</t>
 
-    <section anchor='CIO'><name>Extending the Capability Indication Option</name>
+    <section anchor='CIO'><name>Extending the 6LoWQPAN Capability Indication Option (6CIO)</name>
     <t>
 	This specification defines a new capability bit for use in the 6CIO, as
 	defined by <xref target="RFC7400"/> and extended in<xref target="RFC8505"/>
     for use in IPv6 ND messages.
     </t>
     <t>
-	The new "U" bit indicates that the 6LBR provides address mapping
+	The new "U-flag" indicates that the 6LBR provides address mapping
     services per this specification.
     </t>
-    <figure anchor='fig6CIO'><name>New Capability Bits in the 6CIO</name>
+    <figure anchor='fig6CIO'><name>New Capability Bit in the 6CIO</name>
     <artwork>
     <![CDATA[
 
@@ -482,15 +483,15 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |     Type      |   Length = 1  | Experimental  |X|A|D|L|B|P|E|G|
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |F|   |U|                       Reserved                        |
+   |F| |U|                       Reserved                          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     ]]></artwork>
     </figure>
 
-    <t> Option Fields:    </t>
+    <t> 6CIO Option Fields:    </t>
 	<dl>
-	<dt>Type</dt><dd> 36 </dd>
-	<dt><strong>U</strong></dt><dd> The 6LBR provides address mapping services.  </dd>
+    <dt><strong>Type:</strong>      </dt><dd> 36 </dd>
+	<dt><strong>U-Flag:</strong>    </dt><dd> The 6LBR provides address mapping services.  </dd>
 	</dl>
 
     </section>	<!-- end section "Extending the Capability Indication Option" -->
@@ -550,7 +551,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
     <section anchor="am"><name>Address Mapping Messages</name>
     <t>
-    A 6LBR signals that support by setting the "B" bit in the 6CIO of the RA
+    A 6LBR signals that support by setting the B-flag in the 6CIO of the RA
     messages that it generates.
     A 6LBR that supports this specification MUST also set the "A" bit,
     indicating support of the Address Mapping messages for address lookup.
@@ -600,7 +601,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
     </t>
 
     <t>
-    A 6LBR thus typically sets the "A", the "B", and the "L" bits when
+    A 6LBR thus typically sets three flags (A, B, and L) when
     attached to a Backbone Link that it serves, as illustrated in
     <xref target='figBackbone'/>. In that case, the IPv6 Nodes and 6BBRs can
     use an NS/NA exchange with the 6LBR for both duplicate detection and lookup
@@ -629,7 +630,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
        </li>
        <li>
        If at least one LLA is found in the Address Registration, then the 6LBR
-       MUST place one in a TLLAO option in the NA message.
+       MUST place one in a TLLAO in the NA message.
        </li>
     </ul>
     <t>
@@ -675,7 +676,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
    <t>
 
-   The new registries relate to the ICMP type
+   The new registries relate to the ICMPv6 type
    157, Duplicate Address Request (shown in <xref target="DARcode"/>), and
    158, Duplicate Address Confirmation (shown in <xref target="DACcode"/>),
    respectively. For those two ICMP types, the ICMP Code field is split
@@ -727,7 +728,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    Protocol version 6 (ICMPv6) Parameters", as follows:
 	</t>
 
-	<table anchor="AROstat" ><name>New Address Registration Option Status Values"</name>
+	<table anchor="AROstat" ><name>New Address Registration Option Status Values</name>
    <thead>
       <tr><td><strong>Value</strong> </td><td><strong>Description</strong></td><td><strong>Reference</strong></td></tr>
    </thead><tbody>
@@ -751,7 +752,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
    <thead>
       <tr><td><strong>Bit</strong></td><td><strong>Description</strong></td><td><strong>Reference</strong></td></tr>
    </thead><tbody>
-      <tr><td><strong>19 (suggested)</strong></td><td>AM Support (U bit)</td><td>This RFC</td></tr>
+      <tr><td><strong>19 (suggested)</strong></td><td>Address Mapping Support (U-flag)</td><td>This RFC</td></tr>
 
    </tbody>
    
