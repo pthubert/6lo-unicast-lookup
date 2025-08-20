@@ -576,29 +576,31 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 |  IPv6 Node     |                    |                |
 +----------------+                    +----------------+
          |                                     |
-         |         1. AMR (EDAR Type 157)      |
-         |------------------------------------>|
-         | IP Src: Querier's Global Unicast    |
-         | IP Dest: 6LBR's Global Unicast      |
-         | Code Prefix=1, Code Suffix=0        |
-         | ROVR=0, TID=0, Lifetime=0           |
-         | SLLAO (Querier LLA)                 |
+         |            EDAR (SLLAO)             |__
+         |------------------------------------>|  \
+         | IP Src: Querier's Global Unicast    |  |
+         | IP Dest: 6LBR's Global Unicast      |  |
+         | Registered Address Field: Target IP |  |
+         | Code Prefix=1, Code Suffix=0        |  AMR
+         | ROVR=0, TID=0, Lifetime=0           |  |
+         |                                     |  |
+         |                                     |  |
+         |                                     |__/
          |                                     |
          |                                     |
-         |                                     |
-         |                                     |
-         |         2. AMC (EDAC Type 158)      |
-         |<------------------------------------|
-         | IP Src: 6LBR's Global Unicast       |
-         | IP Dest: Querier's Global Unicast   |
-         | Code Prefix=1, Code Suffix=0        |
-         |                                     |
-         |    Case A: Address Not Found        |
-         |    Status = "Address Not Found"     |
-         |    (No TLLAO)                       |
-         |                                     |
-         |    Case B: Address Found            |
-         |    Status = 0 (Success)             |
+         |            EDAC (TLLAO)             |__  
+         |<------------------------------------|  \ 
+         | IP Src: 6LBR's Global Unicast       |  | 
+         | IP Dest: Querier's Global Unicast   |  |  
+         | Registered Address Field: Target IP |  |  
+         | Code Prefix=1, Code Suffix=0        | AMC 
+         |                                     |  |  
+         |    Case A: Address Not Found        |  |  
+         |    Status = "Address Not Found"     |  |  
+         |    (No TLLAO)                       |__/  
+         |                                     | 
+         |    Case B: Address Found            | 
+         |    Status = 0 (Success)             |     
          |    TLLAO (LLA from registration)    |
          |                                     |
 
@@ -649,14 +651,14 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 |   (IPv6 Node/6BBR)  |                     |                     |
 +---------------------+                     +---------------------+
          |                                           |
-         |  1. NS (SLLAO)                            |
+         |               NS (SLLAO)                  |
          |------------------------------------------>|
          |  IP Src: Querier's Link-Local             |
          |  IP Dest: 6LBR's Link-Local               |   
          |  Target Field: Target IP                  |
          |                                           |
          |                                           |
-         |  2. NA (TLLAO, EARO)                      |
+         |               NA (TLLAO, EARO)            |
          |<------------------------------------------|
          |  IP Src: 6LBR's Link-Local                |
          |  IP Dest: Querier's Link-Local            |
