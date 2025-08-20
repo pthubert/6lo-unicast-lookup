@@ -641,7 +641,7 @@ docName="draft-thubert-6lo-unicast-lookup-03" >
 
 
         <figure anchor="nslookup">
-      <name>Pv6 ND-based Address Lookup</name>
+      <name>IPv6 ND-based Address Lookup</name>
       <artwork><![CDATA[
 
 +---------------------+                     +---------------------+

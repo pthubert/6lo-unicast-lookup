@@ -609,7 +609,7 @@ Internet-Draft           IPv6 ND Unicast Lookup              August 2025
             |  Status = 0 (Success)                     |
             |                                           |
 
-                   Figure 4: Pv6 ND-based Address Lookup
+                   Figure 4: IPv6 ND-based Address Lookup
 
 
 
